@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function ImageSearch() {
@@ -48,6 +48,7 @@ export default function ImageSearch() {
           type="text"
           placeholder="Search for your photo"
           id="searchbox"
+          onKeyDown={()=>{fetchImages(document.getElementById("searchbox").value, page)}}
         />
       </div>
 
@@ -63,7 +64,7 @@ export default function ImageSearch() {
       </button>
       { photos == null ? null : (
         <button
-          className="button button-primary"
+          className="button button-secondary"
           type="button"
           onClick={() => {
             adjustPage(1);
@@ -84,6 +85,8 @@ export default function ImageSearch() {
                   alt={photo.description}
                   width={200}
                   height={200}
+                  draggable={true}
+                  className="miro-draggable draggable-item"
                 />
               </div>
             );
