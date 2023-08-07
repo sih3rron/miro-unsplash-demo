@@ -30,24 +30,14 @@ export const getServerSideProps = async function getServerSideProps({ req }) {
   };
 };
 
-export default function Main({ boards, authUrl }) {
-  const drop = async (e) => {
-    const { x, y, target } = e;
-      console.log("Don't Drop me Now!")
-  };
-  
+export default function Main({ authUrl }) {
   useEffect(() => {
     if (new URLSearchParams(window.location.search).has("panel")) return;
-
     window.miro.board.ui.on("icon:click", async () => {
       window.miro.board.ui.openPanel({
         url: `/?panel=1`,
       });
-    
-    window.miro.board.ui.on('drop', drop);
-
     });
-
   }, []);
 
   if (authUrl) {

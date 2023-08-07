@@ -4,6 +4,29 @@ import Image from "next/image";
 export default function ImageSearch() {
   const [photos, setPhotos] = useState(null);
   const [page, setPage] = useState(1);
+  useEffect(() => {
+      window.miro.board.ui.on("drop", async (e) => {
+        console.log("Event");
+        const { x, y, target } = e;
+        console.log(target.src)
+        try {
+          if (target instanceof HTMLImageElement) {
+            console.log("Place");
+            const image = await miro.board.createImage({
+              x,
+              y,
+              url: target.src,
+            });
+            await miro.board.viewport.zoomTo(image);
+            console.log("Don't Drop me Now!");
+          }
+        } catch (err) {
+          console.error(err);
+        }
+
+      });
+
+  }, []);
 
   async function fetchImages(query, page) {
     const URL = "https://api.unsplash.com/";
